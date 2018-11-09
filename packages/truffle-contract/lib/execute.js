@@ -262,11 +262,11 @@ var execute = {
       }
 
       // As callback
-      if (callback !== undefined) {
-        var intermediary = function(err, e) {
-          if (err) callback(err);
-          var event = dedupe(e.id) && decode.call(constructor, e, true)[0];
-          callback(null, event);
+      if (callback !== undefined){
+        var intermediary = function(err, e){
+          if (err) return callback(err);
+          if (!dedupe(e.id)) return;
+          callback(null, decode.call(constructor, e, true)[0]);
         };
 
         return constructor
